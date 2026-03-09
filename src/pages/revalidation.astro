@@ -1,62 +1,58 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Markdown from '../components/Markdown.astro';
-import { cacheHeaders, randomInt } from '../utils';
+import { Image } from 'astro:assets';
+import corgi from '../assets/corgi.jpg';
 
-export const prerender = false;
 
-const tags = ['/revalidation', 'cats-related', 'all-pets-related'];
-const headers = cacheHeaders(365, tags);
-
-Object.entries(headers).map(([k, v]) => {
-    Astro.response.headers.set(k, v);
-});
 
 const explainer = `
-This is a server-rendered page, last created at \`${new Date().toUTCString()}\` with a few extra response headers:
+Triggerpunkter (eller myofasciella triggerpunkter) är små, hyperömma och spända områden inne i en muskel – ofta kallade muskelknutor i vardagsspråket. De känns som en liten, hård knöl eller en spänd sträng i muskeln, och när man trycker på dem gör det oftast rejält ont lokalt. Det som gör dem speciella är att de inte bara ger smärta där de sitter – de kan också orsaka strålande smärta (referred pain) till helt andra delar av kroppen.
+Hur uppstår de?
+Triggerpunkter bildas när delar av muskeln hamnar i ett slags lokal kramp eller mikrokramper. Muskelfibrerna drar ihop sig och slappnar inte av igen. Det leder till:
 
-~~~js
-${JSON.stringify(headers, null, 2)}
-~~~
+Sämre blodcirkulation och syretillförsel
+Uppbyggnad av slaggprodukter
+Brist på energi i muskelcellerna
 
-Meaning: **for browsers,** this is a non-cacheable page. At the **CDN level,** it *is* cacheable for up to a year (and Netlify also automatically busts the cache on new deployments, by default).
+Resultatet blir en permanent spänning i just det området. Vanliga orsaker är:
 
-But there's something more: the \`Cache-Tag\` header, in tandem with the [purge API](https://docs.netlify.com/platform/caching/#on-demand-invalidation), allows a developer to invalidate at will any
-pieces of content (pages, JSON responses, or whatnot) based on the tags associated with them. Tags are completely up to you to decide on, and allow for very powerful patterns.
+Överbelastning (t.ex. tunga lyft, intensiv träning)
+Ensidiga rörelser eller statiskt arbete (sitta mycket vid datorn, dålig hållning)
+Stress
+Skador eller trauman
+Långvarig spänning från dålig ergonomi
 
-In real-world applications, you may want to use [stale-while-revalidate](https://docs.netlify.com/platform/caching/#stale-while-revalidate-directive) as well, so that end-users don't experience 
-a performance hit as pages are being rebuilt.
+De kan vara aktiva (ger smärta hela tiden, även i vila) eller latenta (bara ömma när man trycker på dem, men kan ändå begränsa rörligheten).
+Varför känns det så?
+När du trycker på en triggerpunkt aktiveras smärtreceptorer lokalt, och signalen skickas också vidare via nerverna så att smärtan känns på ett annat ställe. Klassiska exempel:
 
-Use the button below to invlidate a random tag out of this page's tags, then refresh the page.
+Triggerpunkt i nacke → huvudvärk eller smärta i tinning/panna
+Triggerpunkt i skulderblad → smärta ner i armen eller mellan skuldrorna
+Triggerpunkt i ländrygg → smärta i skinkan eller låret
+
+Det är just den här strålande smärtan som gör triggerpunkter så luriga – många tror att problemet sitter där smärtan känns, men ofta är det triggerpunkten någon annanstans som är boven.
+Hur behandlar man dem?
+I massage (som din djupgående stil) jobbar man med ihållande tryck eller kompression direkt på punkten. Det:
+
+Ökar blodflödet
+Bryter den lokala krampen
+Får muskeln att slappna av
+Minskar den strålande smärtan
+
+Behandlingen kan kännas intensiv (ibland "god ont"), men när punkten släpper brukar det ge en tydlig lättnad och bättre rörlighet. Ofta kombineras det med stretch, andning och rörelse för att resultatet ska hålla längre.
+Kort sagt: Triggerpunkter är inte bara "ont i muskeln" – de är små sabotörer som kan ge stor smärta och stelhet, men de går oftast utmärkt att behandla med rätt teknik. Det är därför många känner stor skillnad efter en fokuserad triggerpunktsbehandling!
 `;
 
-const exampleTag = tags[randomInt(0, tags.length - 1)];
 ---
 
 <Layout title="Revalidation">
     <h1 class="mb-10">Revalidating Server Content</h1>
     <Markdown content={explainer} class="mb-10" />
-    <div class="flex flex-wrap gap-4">
-        <button class="revalidate-button btn" data-tag={exampleTag}>Invalidate tag: {exampleTag}</button>
-        <button class="btn" onclick="location.reload()">Reload page</button>
-    </div>
+     <figure>
+        <Image src={corgi} alt="Corgi" class="border-2 border-white rounded-lg" />
+    </figure>
+    
 </Layout>
 
-<script>
-    function revalidate(tag: string) {
-        fetch('/api/revalidate', {
-            method: 'POST',
-            body: JSON.stringify({ tags: [tag] }),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        });
-        alert(`Invalidated tag: ${tag}`);
-    }
 
-    const revalidateButton = document.querySelectorAll('button.revalidate-button')[0];
-    revalidateButton.addEventListener('click', (e) => {
-        const tag = (e.target as HTMLButtonElement).getAttribute('data-tag');
-        revalidate(tag);
-    });
-</script>
