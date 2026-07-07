@@ -5,7 +5,7 @@ import neck from '../assets/neck.jpg';
 import neckGif from '../assets/neckGif.gif';
 
 const services = [
-    { title: 'Nack Release 15 min',info: `Terapeutisk massage med fokus på att släppa spänningar i nacken. Vi jobbar med massage, triggerpunkter och stretching.`, img: neck,img2: neckGif, href: 'https://www.bokadirekt.se/boka-tjanst/neoskin-39252/nacke-release-3413961' },
+    { title: 'Drop-in Massage 25 min',info: `Klassisk massage med fokus på t.ex nacke eller ländrygg.`, img: neck,img2: neckGif, href: 'https://www.bokadirekt.se/boka-tjanst/neoskin-39252/drop-in-massage-3387452' },
     { title: 'Klassisk Massage 25 min',info: `Klassisk massage med fokus på t.ex nacke eller ländrygg.`, img: neck,img2: neckGif, href: 'https://www.bokadirekt.se/boka-tjanst/neoskin-39252/klassisk-massage-fokus-3347908' },
     { title: 'Klassisk Massage 50 min',info: `Klassisk massage, skräddarsys efter önskemål.`, img: neck,img2: neckGif, href: 'https://www.bokadirekt.se/boka-tjanst/neoskin-39252/klassisk-massage-lyx-3347909' },
     { title: 'Klassisk Massage 75 min',info: `Klassisk helkroppsmassage som skräddarsys efter önskemål.`, img: neck,img2: neckGif, href: 'https://www.bokadirekt.se/boka-tjanst/neoskin-39252/klassisk-massage-extra-lang-3347907' },
@@ -48,7 +48,7 @@ const services = [
                   />
             </div>
             <!-- Content -->
-            <div class="flex-1 p-5 md:p-6 flex flex-col gap-3 md:gap-4 z-10 bg-[#ffefd4cc] text-black ">
+            <div class="flex-1 p-5 md:p-6 flex flex-col gap-3 md:gap-4 z-10 bg-surface/95 text-black">
               <h3 class="text-xl md:text-3xl font-medium opacity-90">
                 {service.title}
               </h3>
@@ -58,25 +58,25 @@ const services = [
               </p>
 
               <!-- Booking button/link area -->
-              <div class="mt-2 md:mt-4">
+              <div class="flex justify-end">
                 <div
                   class="
-                    absolute bottom-2 right-2
-                    inline-flex items-center gap-2.5
-                    px-2 py-1 md:px-2 md:py-1
-                    rounded-lg
-                    text-black font-medium
-                    transition-colors
+                    inline-flex items-center gap-2
+                    px-3 py-1.5 md:px-4 md:py-2
+                    rounded-full
+                    bg-primary text-primary-content font-semibold
                     no-underline
+                    transition-colors
+                    group-hover:bg-primary/85
                   "
                 >
-                  <span class="text-lg md:text-xl">Boka</span>
+                  <span class="text-base md:text-lg">Boka</span>
                    <Image
                     src={logo}
-                    width={36}
-                    height={36}
+                    width={28}
+                    height={28}
                     alt=""
-                    class="w-8 md:w-9 h-8 md:h-9 object-contain"
+                    class="w-6 md:w-7 h-6 md:h-7 object-contain"
                   />
                 </div>
               </div>
